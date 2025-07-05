@@ -1,0 +1,58 @@
+/* src/components/StationsList.css */
+.stations-list {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.stations-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stations-list-header h2 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-family: 'Pricedown', 'Arial Black', sans-serif;
+  color: white;
+  text-shadow: 2px 2px 0 #000;
+  letter-spacing: 1px;
+}
+
+.stations-count {
+  font-weight: bold;
+  color: #00ccff;
+}
+
+.stations-list-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.stations-loading, .no-stations {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: #aaa;
+  padding: 20px;
+}
+
+.stations-loading {
+  color: #00ccff;
+  font-weight: bold;
+  letter-spacing: 1px;
+  animation: pulse 1.5s infinite;
+}
+
+.no-stations p {
+  margin: 5px 0;
+  font-size: 1.1rem;
+}

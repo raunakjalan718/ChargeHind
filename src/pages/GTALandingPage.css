@@ -1,0 +1,349 @@
+/* src/pages/GTALandingPage.css */
+/* Main container styles */
+.gta-landing-page {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  color: white;
+  font-family: 'Roboto Condensed', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 1.2s ease, transform 1.2s ease;
+}
+
+.gta-landing-page.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Video container and transitions */
+.video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+}
+
+.background-video.active {
+  opacity: 1;
+}
+
+.background-video.fade-in {
+  opacity: 1;
+  z-index: 2;
+}
+
+.background-video.fade-out {
+  opacity: 0;
+  z-index: 1;
+}
+
+/* Content overlay for all page elements */
+.content-overlay {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Header styling */
+.gta-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.8s ease 0.8s, transform 0.8s ease 0.8s;
+}
+
+.gta-landing-page.visible .gta-header {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.logo {
+  font-family: 'Pricedown', 'Arial Black', sans-serif;
+  font-size: 2rem;
+  color: white;
+  text-shadow: 2px 2px 0 #000;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.gta-nav {
+  display: flex;
+}
+
+.nav-item {
+  margin: 0 15px;
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-item:hover {
+  color: #00ccff;
+  transform: scale(1.05);
+}
+
+.auth-buttons {
+  display: flex;
+}
+
+.login-button, .signup-button {
+  padding: 8px 20px;
+  margin-left: 15px;
+  text-decoration: none;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-button:hover, .signup-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.login-button {
+  background-color: transparent;
+  border: 2px solid white;
+  color: white;
+}
+
+.signup-button {
+  background-color: #00ccff;
+  color: black;
+}
+
+/* Main content area */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+/* Title styling */
+.title-container {
+  text-align: center;
+  margin-bottom: 60px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease 0.3s, transform 1s ease 0.3s;
+}
+
+.gta-landing-page.visible .title-container {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gta-title {
+  font-family: 'Pricedown', 'Arial Black', sans-serif;
+  font-size: 7rem;
+  margin: 0;
+  color: white;
+  text-shadow: 4px 4px 0 #000;
+  letter-spacing: 4px;
+}
+
+.subtitle {
+  font-size: 2rem;
+  font-weight: 300;
+  margin-top: 10px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+  letter-spacing: 3px;
+}
+
+/* Feature boxes */
+.feature-boxes {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  max-width: 1200px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s ease 0.6s, transform 1s ease 0.6s;
+}
+
+.gta-landing-page.visible .feature-boxes {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.feature-box {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 30px;
+  width: 30%;
+  border-left: 4px solid #00ccff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin: 0 10px;
+}
+
+.feature-box:hover {
+  transform: translateY(-10px);
+  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.feature-box h3 {
+  font-size: 1.8rem;
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #00ccff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.feature-box p {
+  margin-bottom: 30px;
+  line-height: 1.5;
+  color: #e0e0e0;
+}
+
+.feature-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #00ccff;
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.feature-button:hover {
+  background-color: white;
+  transform: translateY(-2px);
+}
+
+/* Footer styling */
+.gta-footer {
+  padding: 15px 40px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.rockstar-parody {
+  font-style: italic;
+  color: #aaa;
+}
+
+/* GTA Font */
+@font-face {
+  font-family: 'Pricedown';
+  src: url('https://cdn.jsdelivr.net/gh/horneber/vice-city-webfont@master/web/pricedown-webfont.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .gta-title {
+    font-size: 5rem;
+  }
+  
+  .feature-boxes {
+    width: 95%;
+  }
+}
+
+@media (max-width: 768px) {
+  .gta-header {
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+  }
+  
+  .logo {
+    margin-bottom: 15px;
+  }
+  
+  .gta-nav {
+    margin-bottom: 15px;
+  }
+  
+  .auth-buttons {
+    width: 100%;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .gta-title {
+    font-size: 4rem;
+  }
+  
+  .subtitle {
+    font-size: 1.5rem;
+  }
+  
+  .feature-boxes {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .feature-box {
+    width: auto;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gta-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .nav-item {
+    margin: 5px;
+    font-size: 1rem;
+  }
+  
+  .gta-title {
+    font-size: 3rem;
+  }
+  
+  .subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .login-button, .signup-button {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+}

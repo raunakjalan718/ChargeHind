@@ -1,0 +1,103 @@
+/* src/components/StationCard.css */
+.station-card {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-left: 4px solid #333;
+  margin-bottom: 15px;
+  display: flex;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.station-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.station-card.selected {
+  border-left-color: #00ccff;
+  background-color: rgba(0, 70, 100, 0.3);
+}
+
+.station-image {
+  position: relative;
+  width: 100px;
+  height: 80px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.station-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.station-distance {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 2px 6px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.station-details {
+  flex: 1;
+  padding: 10px;
+}
+
+.station-name {
+  margin: 0 0 5px 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+}
+
+.station-description {
+  margin: 0 0 3px 0;
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+.station-address {
+  margin: 0 0 5px 0;
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+.station-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+}
+
+.station-hours {
+  color: #00cc00;
+}
+
+.connector-info {
+  display: flex;
+  align-items: center;
+}
+
+.connector-type {
+  margin-right: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 3px 6px;
+  border-radius: 2px;
+  font-weight: bold;
+}
+
+.connector-power {
+  margin-right: 8px;
+  color: #00ccff;
+}
+
+.connector-availability {
+  color: #aaa;
+}
