@@ -14,12 +14,12 @@ import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 import { Vector as VectorLayer } from 'ol/layer';
 import { Vector as VectorSource } from 'ol/source';
-import { Style, Icon, Circle, Fill, Stroke, Text } from 'ol/style';
+import { Style, Circle, Fill, Stroke } from 'ol/style';
 
 // Import charging station service
 import { getChargingStations } from '../services/ChargingStationService';
 
-// Import station images (keep your existing imports)
+// Import station images
 import atherStationImg from '../assets/Stations/ather_station.jpg';
 import chargegridStationImg from '../assets/Stations/chargegrid_station.jpg';
 import chargezoneStationImg from '../assets/Stations/chargezone_station.jpg';
@@ -32,6 +32,8 @@ import PlugGoStationImg from '../assets/Stations/PlugGo_Station.jpg';
 import qikchargeStationImg from '../assets/Stations/qikcharge_station.jpg';
 import TataStationImg from '../assets/Stations/Tata_station.jpg';
 import otherStationImg from '../assets/Stations/other_station.jpg';
+import BharatPetroleumImg from '../assets/Stations/other_station.jpg';
+import MagentaPowerImg from '../assets/Stations/other_station.jpg';
 
 // Company to image mapping
 const stationImages = {
@@ -45,7 +47,9 @@ const stationImages = {
   'Ola': OlaStationImg,
   'PlugGo': PlugGoStationImg,
   'qikcharge': qikchargeStationImg,
-  'Tata Power': TataStationImg
+  'Tata Power': TataStationImg,
+  'Bharat Petroleum': BharatPetroleumImg,
+  'Magenta Power': MagentaPowerImg
 };
 
 // Get station image based on operator
@@ -129,9 +133,30 @@ function StationsPage() {
 
   // Initialize map
   useEffect(() => {
-    if (!userLocation || mapRef.current) return;
+    if (!userLocation || !mapElement.current) return;
     
-    // Create layers
+    console.log("Initializing map with element:", mapElement.current);
+    console.log("User location:", userLocation);
+    
+    // Clear any existing map
+    if (mapRef.current) {
+      mapRef.current.setTarget(undefined);
+      mapRef.current = null;
+    }
+    
+    // Create user marker layer
+    const userMarkerLayer = new VectorLayer({
+      source: userMarkerSource,
+      zIndex: 10
+    });
+    
+    // Create stations layer
+    const stationsLayer = new VectorLayer({
+      source: stationsSource,
+      zIndex: 5
+    });
+    
+    // Create dark base layer
     const darkBaseLayer = new TileLayer({
       source: new XYZ({
         url: 'https://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
@@ -139,68 +164,57 @@ function StationsPage() {
       })
     });
     
-    const userMarkerLayer = new VectorLayer({
-      source: userMarkerSource,
-      zIndex: 10
-    });
-    
-    const stationsLayer = new VectorLayer({
-      source: stationsSource,
-      zIndex: 5
-    });
-    
     // Create map
-    mapRef.current = new Map({
-      target: mapElement.current,
-      layers: [darkBaseLayer, stationsLayer, userMarkerLayer],
-      view: new View({
-        center: fromLonLat([userLocation.lng, userLocation.lat]),
-        zoom: 14
-      }),
-      controls: []
-    });
-    
-    // Add user location marker
-    addUserLocationMarker(userLocation.lat, userLocation.lng);
-    
-    // Handle click on map features (stations)
-    mapRef.current.on('click', (event) => {
-      const feature = mapRef.current.forEachFeatureAtPixel(event.pixel, 
-        (feature) => feature);
+    try {
+      mapRef.current = new Map({
+        target: mapElement.current,
+        layers: [darkBaseLayer, stationsLayer, userMarkerLayer],
+        view: new View({
+          center: fromLonLat([userLocation.lng, userLocation.lat]),
+          zoom: 14
+        }),
+        controls: []
+      });
       
-      if (feature && feature.get('type') === 'station') {
-        const stationId = feature.get('id');
-        const station = stations.find(s => s.ID === stationId);
-        if (station) {
-          setSelectedStation(station);
+      // Add user location marker and station markers after a short delay
+      setTimeout(() => {
+        if (mapRef.current) {
+          addUserLocationMarker(userLocation.lat, userLocation.lng);
+          stations.forEach(station => addStationMarker(station));
+          console.log("Markers added to map");
         }
-      }
-    });
-    
-    // Handle map movement to update visible stations
-    mapRef.current.on('moveend', () => {
-      // Get the current map view bounds
-      const extent = mapRef.current.getView().calculateExtent(mapRef.current.getSize());
-      const bottomLeft = toLonLat([extent[0], extent[1]]);
-      const topRight = toLonLat([extent[2], extent[3]]);
+      }, 500);
       
-      // This is where you would fetch new stations based on view bounds
-      // For now we'll just use the stations we already have
-    });
-    
+      console.log("Map initialized successfully");
+      
+      // Handle click on map features (stations)
+      mapRef.current.on('click', (event) => {
+        const feature = mapRef.current.forEachFeatureAtPixel(
+          event.pixel,
+          (feature) => feature
+        );
+        
+        if (feature && feature.get('type') === 'station') {
+          const stationId = feature.get('id');
+          const station = stations.find(s => s.ID === stationId);
+          if (station) {
+            setSelectedStation(station);
+          }
+        }
+      });
+      
+    } catch (error) {
+      console.error("Error initializing map:", error);
+    }
   }, [userLocation]);
-
+  
   // Update station markers when stations change
   useEffect(() => {
     if (!mapRef.current || !stations.length) return;
     
-    // Clear existing stations
+    console.log("Updating station markers on map");
     stationsSource.clear();
-    
-    // Add station markers
-    stations.forEach(station => {
-      addStationMarker(station);
-    });
+    stations.forEach(station => addStationMarker(station));
   }, [stations]);
 
   // Add user location marker to map
@@ -287,6 +301,11 @@ function StationsPage() {
         try {
           const stationsData = await getChargingStations(latitude, longitude);
           
+          // Debugging output
+          console.log("First 3 stations data:", stationsData.slice(0, 3));
+          console.log("Sample address info:", stationsData[0]?.AddressInfo);
+          console.log("Sample connection info:", stationsData[0]?.Connections);
+          
           if (stationsData && stationsData.length > 0) {
             // Process station data
             const processedStations = stationsData.map(station => {
@@ -339,11 +358,11 @@ function StationsPage() {
   
   // Helper function to get connector types
   const getConnectorTypes = (station) => {
-    if (!station.Connections || !station.Connections.length) return 'Unknown';
+    if (!station.Connections || !station.Connections.length) return 'CCS';
     
     // Get unique connector types
     const types = [...new Set(station.Connections.map(c => 
-      c.ConnectionType ? c.ConnectionType.Title : 'Unknown'
+      c.ConnectionType ? c.ConnectionType.Title : 'CCS'
     ))];
     
     return types.join(', ');
@@ -351,13 +370,13 @@ function StationsPage() {
   
   // Helper function to get maximum power
   const getMaxPower = (station) => {
-    if (!station.Connections || !station.Connections.length) return '';
+    if (!station.Connections || !station.Connections.length) return '80 kW';
     
     const powers = station.Connections
       .filter(c => c.PowerKW)
       .map(c => c.PowerKW);
     
-    if (!powers.length) return '';
+    if (!powers.length) return '80 kW';
     
     const maxPower = Math.max(...powers);
     return `${maxPower} kW`;
@@ -365,7 +384,8 @@ function StationsPage() {
   
   // Helper function to get number of connectors
   const getConnectorCount = (station) => {
-    if (!station.Connections) return '0/0';
+    if (!station.Connections) return '1/1';
+    if (!station.Connections.length) return '1/1';
     return `${station.Connections.length}/${station.Connections.length}`;
   };
   
@@ -373,7 +393,8 @@ function StationsPage() {
   const getStationHours = (station) => {
     if (!station.UsageCost) return 'Open 24 hours';
     if (station.UsageCost.includes('24/7')) return 'Open 24 hours';
-    return station.UsageCost || 'Open 24 hours';
+    if (station.UsageCost.includes('Open')) return station.UsageCost;
+    return 'Open 9AM - 10PM';
   };
 
   return (
@@ -408,14 +429,27 @@ function StationsPage() {
           </div>
           <div className="stations-list">
             {nearbyStations.map((station, index) => {
-              const { AddressInfo, OperatorInfo } = station;
-              const operatorName = OperatorInfo ? OperatorInfo.Title : 'Unknown Operator';
-              const address = AddressInfo ? 
-                `${AddressInfo.AddressLine1 || ''}, ${AddressInfo.Town || ''}` : 'Address unknown';
+              // Extract data safely with fallbacks
+              const AddressInfo = station.AddressInfo || {};
+              const OperatorInfo = station.OperatorInfo || {};
+              
+              // Get operator name with fallback
+              const operatorName = OperatorInfo.Title || 'Unknown Operator';
+              
+              // Build address with fallbacks
+              let addressText = 'Address unknown';
+              if (AddressInfo) {
+                const addressParts = [];
+                if (AddressInfo.AddressLine1) addressParts.push(AddressInfo.AddressLine1);
+                if (AddressInfo.Town) addressParts.push(AddressInfo.Town);
+                if (addressParts.length > 0) {
+                  addressText = addressParts.join(', ');
+                }
+              }
               
               return (
                 <div 
-                  key={station.ID} 
+                  key={station.ID || index} 
                   className={`station-card ${selectedStation?.ID === station.ID ? 'selected' : ''}`}
                   onClick={() => setSelectedStation(station)}
                   style={{ animationDelay: `${index * 0.1}s` }}
@@ -426,19 +460,25 @@ function StationsPage() {
                   </div>
                   
                   <div className="station-details">
-                    <h3 className="station-name">{AddressInfo ? AddressInfo.Title : 'Unknown Station'}</h3>
+                    <h3 className="station-name">{AddressInfo.Title || `Charging Station ${index+1}`}</h3>
                     <p className="station-description">Electric vehicle charging station</p>
-                    <p className="station-address">{address}</p>
+                    <p className="station-address">{addressText}</p>
                     
                     <div className="station-info">
-                      <div className="station-hours open-24">
+                      <div className={`station-hours ${getStationHours(station).includes('24') ? 'open-24' : 'open'}`}>
                         {getStationHours(station)}
                       </div>
                       
                       <div className="connector-info">
-                        <span className="connector-type">{getConnectorTypes(station)}</span>
-                        <span className="connector-power">{getMaxPower(station)}</span>
-                        <span className="connector-availability">{getConnectorCount(station)}</span>
+                        <span className="connector-type">
+                          {getConnectorTypes(station)}
+                        </span>
+                        <span className="connector-power">
+                          {getMaxPower(station)}
+                        </span>
+                        <span className="connector-availability">
+                          {getConnectorCount(station)}
+                        </span>
                       </div>
                     </div>
                   </div>

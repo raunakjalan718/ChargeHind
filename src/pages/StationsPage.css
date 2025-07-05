@@ -1,577 +1,546 @@
 /* src/pages/StationsPage.css */
 .stations-page {
-    width: 100%;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.85);
-    background-image: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
-    color: white;
-    font-family: 'Roboto Condensed', Arial, sans-serif;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    padding: 0;
-    opacity: 0;
-    transform: scale(1.05);
-    transition: opacity 1.2s ease, transform 1.2s ease;
-  }
-  
-  .stations-page.page-visible {
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  background-image: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+  color: white;
+  font-family: 'Roboto Condensed', Arial, sans-serif;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 1.2s ease, transform 1.2s ease;
+}
+
+.stations-page.page-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Header styling - GTA style */
+.stations-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  height: 60px;
+  z-index: 1000;
+  position: relative;
+  transform: translateY(-50px);
+  opacity: 0;
+  animation: slideDown 0.8s forwards 0.3s;
+}
+
+@keyframes slideDown {
+  to {
     opacity: 1;
-    transform: scale(1);
-  }
-  
-  /* Header styling - GTA style */
-  .stations-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px;
-    background-color: rgba(0, 0, 0, 0.5);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-    height: 60px;
-    z-index: 1000;
-    position: relative;
-    transform: translateY(-50px);
-    opacity: 0;
-    animation: slideDown 0.8s forwards 0.3s;
-  }
-  
-  @keyframes slideDown {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .stations-title {
-    font-family: 'Pricedown', 'Arial Black', sans-serif;
-    font-size: 2.5rem;
-    color: #00ccff; /* Changed to blue color */
-    text-shadow: 4px 4px 0 #000;
-    margin: 0;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-  
-  .back-button {
-    padding: 8px 20px;
-    background-color: #00ccff; /* Changed to blue */
-    border: none; /* Removed border */
-    color: black; /* Changed text to black */
-    text-decoration: none;
-    font-weight: bold;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  
-  .back-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 10px rgba(0, 204, 255, 0.3);
-    background-color: #33d6ff; /* Slightly lighter blue on hover */
-  }
-  
-  /* Container for map and stations list */
-  .stations-container {
-    display: flex;
-    height: calc(100vh - 60px);
-    width: 100%;
-  }
-  
-  /* Map container */
-  .map-container {
-    flex: 1;
-    height: 100%;
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .map-wrapper {
-    height: 100%;
-    opacity: 0;
-    animation: fadeIn 1s forwards 0.5s;
-  }
-  
-  @keyframes fadeIn {
-    to {
-      opacity: 1;
-    }
-  }
-  
-  /* Stations list container */
-  .stations-list-container {
-    width: 400px;
-    height: 100%;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    background-color: rgba(0, 0, 0, 0.7);
-    transform: translateX(100px);
-    opacity: 0;
-    transition: transform 0.8s ease, opacity 0.8s ease;
-  }
-  
-  .stations-list-container.list-visible {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  
-  .stations-list-header {
-    padding: 15px 20px;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  
-  .stations-count-header {
-    margin: 0;
-    font-size: 1.4rem;
-    font-family: 'Pricedown', 'Arial Black', sans-serif;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    text-shadow: 2px 2px 0 #000;
-    color: #00ccff; /* Blue color for the entire text */
-  }
-  
-  .stations-list {
-    flex: 1;
-    overflow-y: auto;
-    padding: 10px;
-    scrollbar-width: thin;
-    scrollbar-color: #333 #0a0a0a;
-  }
-  
-  .stations-list::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  .stations-list::-webkit-scrollbar-track {
-    background: #0a0a0a;
-  }
-  
-  .stations-list::-webkit-scrollbar-thumb {
-    background-color: #333;
-    border-radius: 4px;
-  }
-  
-  /* Station card styling with animation */
-  .station-card {
-    background-color: rgba(0, 0, 0, 0.4);
-    border-left: 4px solid #00ccff;
-    margin-bottom: 15px;
-    display: flex;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    transform: translateX(50px);
-    opacity: 0;
-    animation: slideIn 0.5s forwards;
-  }
-  
-  @keyframes slideIn {
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-  
-  .station-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 204, 255, 0.2);
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  
-  .station-card.selected {
-    border-left-color: #00ccff;
-    background-color: rgba(0, 70, 100, 0.3);
-    box-shadow: 0 0 15px rgba(0, 204, 255, 0.3);
-  }
-  
-  .station-image {
-    position: relative;
-    width: 100px;
-    min-width: 100px;
-    height: 80px;
-    overflow: hidden;
-    flex-shrink: 0;
-    background-color: #1a1a1a;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .station-image img {
-    max-width: 90%;
-    max-height: 90%;
-    object-fit: contain;
-  }
-  
-  .station-distance {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 2px 6px;
-    font-size: 0.8rem;
-    font-weight: bold;
-  }
-  
-  .station-details {
-    flex: 1;
-    padding: 10px;
-  }
-  
-  .station-name {
-    margin: 0 0 5px 0;
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: white;
-  }
-  
-  .station-description {
-    margin: 0 0 3px 0;
-    font-size: 0.8rem;
-    color: #aaa;
-  }
-  
-  .station-address {
-    margin: 0 0 5px 0;
-    font-size: 0.9rem;
-    color: #ddd;
-  }
-  
-  .station-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.8rem;
-  }
-  
-  .station-hours {
-    color: #aaa;
-  }
-  
-  .station-hours.open-24 {
-    color: #00cc00;
-  }
-  
-  .station-hours.open {
-    color: #00cc00;
-  }
-  
-  .station-hours.closed {
-    color: #cc0000;
-  }
-  
-  .connector-info {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  
-  .connector-type {
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 3px 6px;
-    border-radius: 2px;
-    font-weight: bold;
-  }
-  
-  .connector-power {
-    color: #00ccff;
-    width: 40px;
-    text-align: right;
-  }
-  
-  .connector-availability {
-    color: #aaa;
-  }
-  
-  /* Location symbol for user's current position */
-  .location-symbol {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .location-dot {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 8px;
-    height: 8px;
-    background-color: #00ccff;
-    border-radius: 50%;
-    z-index: 2;
-    border: 2px solid white;
-  }
-  
-  .location-ring {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 18px;
-    height: 18px;
-    border: 2px solid #00ccff;
-    border-radius: 50%;
-    opacity: 0.7;
-    animation: pulse-ring 2s infinite;
-  }
-  
-  @keyframes pulse-ring {
-    0% {
-      transform: translate(-50%, -50%) scale(0.8);
-      opacity: 0.8;
-    }
-    70% {
-      transform: translate(-50%, -50%) scale(1.2);
-      opacity: 0.2;
-    }
-    100% {
-      transform: translate(-50%, -50%) scale(1.3);
-      opacity: 0;
-    }
-  }
-  
-  /* Station markers - reduced size */
-  .station-marker-container {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 5px rgba(0, 204, 255, 0.5);
-  }
-  
-  .station-marker-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    box-shadow: 0 0 3px rgba(0, 204, 255, 0.5);
-  }
-  
-  /* Station popup style */
-  .station-popup {
-    padding: 5px;
-  }
-  
-  .station-popup-header {
-    font-weight: bold;
-    margin-bottom: 4px;
-  }
-  
-  .station-popup-distance {
-    color: #00ccff;
-    font-size: 0.9em;
-    margin-bottom: 4px;
-  }
-  
-  .station-popup-connectors {
-    font-size: 0.9em;
-  }
-  
-  /* GTA-style loading animation */
-  .loading-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.95) 100%);
-  }
-  
-  .gta-loading-animation {
-    width: 70%;
-    max-width: 600px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .gta-loading-bar {
-    height: 25px;
-    background-color: rgba(255, 255, 255, 0.2);
-    width: 100%;
-    border: 2px solid white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    margin-bottom: 10px;
-    overflow: hidden;
-  }
-  
-  .gta-loading-progress {
-    height: 100%;
-    background: linear-gradient(to right, #00ccff, #3366ff);
-    width: 0%;
-    animation: loadProgress 2s ease-out forwards;
-  }
-  
-  @keyframes loadProgress {
-    0% { width: 0%; }
-    60% { width: 70%; }
-    100% { width: 100%; }
-  }
-  
-  .gta-loading-text {
-    margin-top: 10px;
-    color: white;
-    font-family: 'Pricedown', 'Arial Black', sans-serif;
-    font-weight: bold;
-    text-align: center;
-    letter-spacing: 2px;
-    font-size: 1.5rem;
-    animation: pulse-text 1.5s infinite;
-  }
-  
-  .gta-loading-tip {
-    margin-top: 20px;
-    color: white;
-    font-family: 'Arial', sans-serif;
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 15px;
-    border-left: 4px solid #00ccff;
-    font-size: 1.2rem;
-  }
-  
-  @keyframes pulse-text {
-    0% { opacity: 0.6; }
-    50% { opacity: 1; }
-    100% { opacity: 0.6; }
-  }
-  
-  .error-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.95) 100%);
-  }
-  
-  .error-text {
-    font-size: 1.2rem;
-    text-align: center;
-    max-width: 80%;
-    margin-bottom: 20px;
-    color: #ff3333;
-  }
-  
-  .retry-button {
-    padding: 10px 20px;
-    background-color: #00ccff;
-    color: black;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 1rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-  
-  .retry-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 10px rgba(0, 204, 255, 0.3);
-    background-color: #33d6ff; /* Slightly lighter blue on hover */
-  }
-  
-  /* Leaflet map styles */
-  .leaflet-container {
-    height: 100%;
-    width: 100%;
-    background-color: #0a0a0a;
-  }
-  
-  .leaflet-control-zoom a {
-    background-color: rgba(0, 0, 0, 0.7) !important;
-    color: white !important;
-    border-color: #333 !important;
-  }
-  
-  .leaflet-control-zoom a:hover {
-    background-color: rgba(0, 204, 255, 0.7) !important;
-  }
-  
-  .leaflet-popup-content-wrapper {
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    border-radius: 2px;
-    border: 1px solid rgba(0, 204, 255, 0.3);
-  }
-  
-  .leaflet-popup-tip {
-    background-color: rgba(0, 0, 0, 0.8);
-  }
-  
-  /* GTA Font */
-  @font-face {
-    font-family: 'Pricedown';
-    src: url('https://cdn.jsdelivr.net/gh/horneber/vice-city-webfont@master/web/pricedown-webfont.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-  }
-  
-  /* Responsive design */
-  @media (max-width: 900px) {
-    .stations-container {
-      flex-direction: column;
-    }
-    
-    .map-container {
-      height: 50%;
-      border-right: none;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .stations-list-container {
-      width: 100%;
-      height: 50%;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .stations-header {
-      padding: 10px 15px;
-    }
-    
-    .stations-title {
-      font-size: 1.8rem;
-    }
-    
-    .back-button {
-      padding: 5px 15px;
-      font-size: 0.9rem;
-    }
-    
-    .stations-list-header h2 {
-      font-size: 1.2rem;
-    }
-    
-    .station-image {
-      width: 80px;
-      min-width: 80px;
-      height: 70px;
-    }
-  }
-  .map-wrapper {
-  height: 100%;
+    transform: translateY(0);
+  }
+}
+
+.stations-title {
+  font-family: 'Pricedown', 'Arial Black', sans-serif;
+  font-size: 2.5rem;
+  color: #00ccff; /* Changed to blue color */
+  text-shadow: 4px 4px 0 #000;
+  margin: 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.back-button {
+  padding: 8px 20px;
+  background-color: #00ccff; /* Changed to blue */
+  border: none; /* Removed border */
+  color: black; /* Changed text to black */
+  text-decoration: none;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.back-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(0, 204, 255, 0.3);
+  background-color: #33d6ff; /* Slightly lighter blue on hover */
+}
+
+/* Container for map and stations list */
+.stations-container {
+  display: flex;
+  height: calc(100vh - 60px);
   width: 100%;
 }
 
-.ol-zoom {
-  top: 10px;
-  left: 10px;
+/* Map container */
+.map-container {
+  flex: 1;
+  height: 100%;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
 }
 
-.ol-zoom button {
-  background-color: rgba(0, 0, 0, 0.7) !important;
-  color: white !important;
-  border-color: #333 !important;
+.map-wrapper {
+  height: 100%;
+  width: 100%;
+  background-color: #0a0a0a;
+  position: relative;
+  opacity: 0;
+  animation: fadeIn 1s forwards 0.5s;
 }
 
-.ol-zoom button:hover {
-  background-color: rgba(0, 204, 255, 0.7) !important;
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Stations list container */
+.stations-list-container {
+  width: 400px;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.7);
+  transform: translateX(100px);
+  opacity: 0;
+  transition: transform 0.8s ease, opacity 0.8s ease;
+}
+
+.stations-list-container.list-visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.stations-list-header {
+  padding: 15px 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stations-count-header {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.station-count-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background-color: #ff0000; /* Red circle */
+  border-radius: 50%;
+  color: #00ccff; /* Matches the blue text */
+  font-family: 'Pricedown', 'Arial Black', sans-serif;
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 0 #000;
+  box-shadow: 0 0 0 2px #000; /* Black border */
+}
+
+.stations-count-text {
+  font-family: 'Pricedown', 'Arial Black', sans-serif;
+  font-size: 1.6rem;
+  color: #00ccff; /* Blue color for text */
+  text-shadow: 2px 2px 0 #000;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.stations-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: #333 #0a0a0a;
+}
+
+.stations-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.stations-list::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+.stations-list::-webkit-scrollbar-thumb {
+  background-color: #333;
+  border-radius: 4px;
+}
+
+/* Station card styling with animation */
+.station-card {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-left: 4px solid #00ccff;
+  margin-bottom: 15px;
+  display: flex;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  transform: translateX(50px);
+  opacity: 0;
+  animation: slideIn 0.5s forwards;
+}
+
+@keyframes slideIn {
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.station-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 204, 255, 0.2);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.station-card.selected {
+  border-left-color: #00ccff;
+  background-color: rgba(0, 70, 100, 0.3);
+  box-shadow: 0 0 15px rgba(0, 204, 255, 0.3);
+}
+
+.station-image {
+  position: relative;
+  width: 100px;
+  min-width: 100px;
+  height: 80px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background-color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.station-image img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+}
+
+.station-distance {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 2px 6px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.station-details {
+  flex: 1;
+  padding: 10px;
+}
+
+.station-name {
+  margin: 0 0 5px 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+}
+
+.station-description {
+  margin: 0 0 3px 0;
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+.station-address {
+  margin: 0 0 5px 0;
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+.station-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+}
+
+.station-hours {
+  color: #aaa;
+}
+
+.station-hours.open-24 {
+  color: #00cc00;
+}
+
+.station-hours.open {
+  color: #00cc00;
+}
+
+.station-hours.closed {
+  color: #cc0000;
+}
+
+.connector-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.connector-type {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 3px 6px;
+  border-radius: 2px;
+  font-weight: bold;
+}
+
+.connector-power {
+  color: #00ccff;
+  width: 40px;
+  text-align: right;
+}
+
+.connector-availability {
+  color: #aaa;
+}
+
+/* Location symbol for user's current position */
+.location-symbol {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.location-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background-color: #00ccff;
+  border-radius: 50%;
+  z-index: 2;
+  border: 2px solid white;
+}
+
+.location-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 18px;
+  height: 18px;
+  border: 2px solid #00ccff;
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: pulse-ring 2s infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.8;
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.2;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.3);
+    opacity: 0;
+  }
+}
+
+/* OpenLayers specific styles */
+.ol-viewport {
+  border-radius: 0;
+  background-color: #0a0a0a;
+}
+
+.ol-control {
+  background-color: transparent;
+}
+
+.ol-control button {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: 1px solid #333;
+}
+
+.ol-control button:hover {
+  background-color: rgba(0, 204, 255, 0.7);
+}
+
+/* GTA-style loading animation */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.95) 100%);
+}
+
+.gta-loading-animation {
+  width: 70%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gta-loading-bar {
+  height: 25px;
+  background-color: rgba(255, 255, 255, 0.2);
+  width: 100%;
+  border: 2px solid white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.gta-loading-progress {
+  height: 100%;
+  background: linear-gradient(to right, #00ccff, #3366ff);
+  width: 0%;
+  animation: loadProgress 2s ease-out forwards;
+}
+
+@keyframes loadProgress {
+  0% { width: 0%; }
+  60% { width: 70%; }
+  100% { width: 100%; }
+}
+
+.gta-loading-text {
+  margin-top: 10px;
+  color: white;
+  font-family: 'Pricedown', 'Arial Black', sans-serif;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 2px;
+  font-size: 1.5rem;
+  animation: pulse-text 1.5s infinite;
+}
+
+.gta-loading-tip {
+  margin-top: 20px;
+  color: white;
+  font-family: 'Arial', sans-serif;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 15px;
+  border-left: 4px solid #00ccff;
+  font-size: 1.2rem;
+}
+
+@keyframes pulse-text {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.95) 100%);
+}
+
+.error-text {
+  font-size: 1.2rem;
+  text-align: center;
+  max-width: 80%;
+  margin-bottom: 20px;
+  color: #ff3333;
+}
+
+.retry-button {
+  padding: 10px 20px;
+  background-color: #00ccff;
+  color: black;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.retry-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(0, 204, 255, 0.3);
+  background-color: #33d6ff; /* Slightly lighter blue on hover */
+}
+
+/* GTA Font */
+@font-face {
+  font-family: 'Pricedown';
+  src: url('https://cdn.jsdelivr.net/gh/horneber/vice-city-webfont@master/web/pricedown-webfont.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Responsive design */
+@media (max-width: 900px) {
+  .stations-container {
+    flex-direction: column;
+  }
+  
+  .map-container {
+    height: 50%;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .stations-list-container {
+    width: 100%;
+    height: 50%;
+  }
+  
+  .stations-count-header {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .stations-header {
+    padding: 10px 15px;
+  }
+  
+  .stations-title {
+    font-size: 1.8rem;
+  }
+  
+  .back-button {
+    padding: 5px 15px;
+    font-size: 0.9rem;
+  }
+  
+  .station-count-number {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+  
+  .stations-count-text {
+    font-size: 1.3rem;
+  }
+  
+  .station-image {
+    width: 80px;
+    min-width: 80px;
+    height: 70px;
+  }
 }
