@@ -1,0 +1,222 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap');
+
+.profile-page {
+  min-height: 100vh;
+  font-family: 'Roboto Condensed', sans-serif;
+  background-color: #111;
+  color: white;
+}
+
+.profile-header {
+  background-color: #0066cc;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile-title {
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: white;
+}
+
+.dashboard-link {
+  background-color: white;
+  color: #0066cc;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+
+.dashboard-link:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+}
+
+.profile-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+.profile-user {
+  margin-bottom: 30px;
+}
+
+.username {
+  font-size: 2.5rem;
+  margin: 0;
+  color: white;
+}
+
+.profile-navigation {
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #333;
+}
+
+.profile-tabs {
+  display: flex;
+  flex-grow: 1;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  padding: 15px 25px;
+  color: #ccc;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-family: 'Roboto Condensed', sans-serif;
+  transition: all 0.3s;
+  text-align: left;
+}
+
+.tab-button:hover {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.tab-button.active {
+  color: #00ccff;
+  border-bottom: 3px solid #00ccff;
+}
+
+.logout-button {
+  background-color: #cc0000;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-left: 20px;
+  transition: all 0.3s;
+}
+
+.logout-button:hover {
+  background-color: #ff0000;
+}
+
+.profile-content {
+  background-color: #222;
+  padding: 30px;
+  border-radius: 5px;
+}
+
+.content-section {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.section-title {
+  color: #00ccff;
+  font-size: 1.8rem;
+  margin-top: 0;
+  margin-bottom: 30px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.profile-field {
+  margin-bottom: 25px;
+}
+
+.field-label {
+  color: #00ccff;
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.field-value {
+  background-color: #333;
+  padding: 15px;
+  border-radius: 3px;
+  font-size: 1.2rem;
+}
+
+.edit-button, .save-button {
+  background-color: #00ccff;
+  border: none;
+  color: black;
+  padding: 12px 25px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.3s;
+}
+
+.edit-button:hover, .save-button:hover {
+  background-color: #33d6ff;
+  transform: translateY(-2px);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 50px 0;
+  font-size: 1.3rem;
+  color: #888;
+}
+
+.preferences-list {
+  margin-bottom: 30px;
+}
+
+.preference-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.preference-item input[type="checkbox"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.preference-item label {
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .profile-navigation {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .profile-tabs {
+    flex-direction: column;
+  }
+  
+  .tab-button {
+    width: 100%;
+    border-bottom: 1px solid #333;
+  }
+  
+  .tab-button.active {
+    border-bottom: 1px solid #333;
+    border-left: 3px solid #00ccff;
+  }
+  
+  .logout-button {
+    margin: 20px 0 0 0;
+    width: 100%;
+  }
+}

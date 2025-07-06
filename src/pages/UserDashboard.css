@@ -1,0 +1,272 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap');
+
+.dashboard-page {
+  min-height: 100vh;
+  font-family: 'Roboto Condensed', sans-serif;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.background-video {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+  background-size: cover;
+  filter: brightness(30%) contrast(120%);
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 100%);
+  z-index: -99;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 10;
+  animation: slideDown 0.8s forwards;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.dashboard-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #00ccff;
+  text-transform: uppercase;
+  margin: 0;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.profile-button {
+  padding: 10px 25px;
+  background-color: #00ccff;
+  border: none;
+  color: black;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-size: 1.1rem;
+}
+
+.profile-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 204, 255, 0.3);
+  background-color: #33d6ff;
+}
+
+.dashboard-welcome {
+  padding: 80px 40px;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+  animation: fadeIn 1s ease-out 0.3s both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.welcome-text {
+  font-size: 5rem;
+  margin: 0;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  color: #00ccff;
+}
+
+.username-text {
+  font-size: 2.2rem;
+  margin: 10px 0 0;
+  opacity: 0.9;
+}
+
+.dashboard-options {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 0 40px 60px;
+  position: relative;
+  z-index: 10;
+  flex-wrap: wrap;
+}
+
+.feature-card {
+  width: 300px;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 30px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  animation: fadeInUp 0.8s ease-out both;
+}
+
+.feature-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.feature-card:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.feature-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background-color: #00ccff;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 204, 255, 0.2);
+}
+
+.feature-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.feature-icon img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.feature-title {
+  color: #00ccff;
+  font-size: 1.8rem;
+  margin: 0 0 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.feature-description {
+  margin: 0 0 25px;
+  opacity: 0.8;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.feature-btn {
+  width: 100%;
+  background-color: #00ccff;
+  color: black;
+  border: none;
+  padding: 12px 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+.feature-btn:hover {
+  background-color: white;
+  transform: translateY(-2px);
+}
+
+.feature-btn.disabled {
+  background-color: #555;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.coming-soon {
+  position: relative;
+}
+
+.coming-soon-label {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #cc0000;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 5px 10px;
+  text-transform: uppercase;
+}
+
+/* Animation for page load */
+body.dashboard-loaded .dashboard-header {
+  animation: slideDown 0.8s forwards;
+}
+
+body.dashboard-loaded .dashboard-welcome {
+  animation: fadeIn 1s ease-out 0.3s both;
+}
+
+body.dashboard-loaded .feature-card:nth-child(1) {
+  animation: fadeInUp 0.8s ease-out 0.5s both;
+}
+
+body.dashboard-loaded .feature-card:nth-child(2) {
+  animation: fadeInUp 0.8s ease-out 0.7s both;
+}
+
+body.dashboard-loaded .feature-card:nth-child(3) {
+  animation: fadeInUp 0.8s ease-out 0.9s both;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .dashboard-header {
+    padding: 15px;
+  }
+  
+  .dashboard-title {
+    font-size: 2rem;
+  }
+  
+  .welcome-text {
+    font-size: 3.5rem;
+  }
+  
+  .username-text {
+    font-size: 1.8rem;
+  }
+  
+  .dashboard-options {
+    flex-direction: column;
+    align-items: center;
+  }
+}
