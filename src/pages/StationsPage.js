@@ -8,7 +8,11 @@ import './StationsPage.css';
 // Import charging station service
 import { getChargingStations } from '../services/ChargingStationService';
 
-// --- FIX: Use const for external image URLs, NOT import ---
+// Fix Leaflet icon issue (MOVED IMPORTS TO TOP)
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+
+// --- CONSTANT DEFINITIONS (Moved after imports) ---
 const atherStationImg = 'https://media.githubusercontent.com/media/raunakjalan718/ChargeHind/refs/heads/main/src/assets/Stations/ather_station.jpg';
 const chargegridStationImg = 'https://media.githubusercontent.com/media/raunakjalan718/ChargeHind/refs/heads/main/src/assets/Stations/chargegrid_station.jpg';
 const chargezoneStationImg = 'https://media.githubusercontent.com/media/raunakjalan718/ChargeHind/refs/heads/main/src/assets/Stations/chargezone_station.jpg';
@@ -24,9 +28,7 @@ const otherStationImg = 'https://media.githubusercontent.com/media/raunakjalan71
 const BharatPetroleumImg = 'https://media.githubusercontent.com/media/raunakjalan718/ChargeHind/refs/heads/main/src/assets/Stations/other_station.jpg';
 const MagentaPowerImg = 'https://media.githubusercontent.com/media/raunakjalan718/ChargeHind/refs/heads/main/src/assets/Stations/other_station.jpg';
 
-// Fix Leaflet icon issue
-import icon from 'leaflet/dist/images/marker-icon.png';
-import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+// Configure Leaflet default icon
 let DefaultIcon = L.icon({
   iconUrl: icon,
   shadowUrl: iconShadow,
