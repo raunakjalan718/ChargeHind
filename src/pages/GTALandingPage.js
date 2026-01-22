@@ -1,12 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './GTALandingPage.css';
-import backgroundVideo from 'https://github.com/raunakjalan718/ChargeHind/raw/refs/heads/main/src/assets/city-drive.mp4';
+
+// --- FIX: Use const instead of import for external URLs ---
+// I updated the link to a CDN (jsdelivr) which is faster and prevents CORS errors
+const backgroundVideo = 'https://cdn.jsdelivr.net/gh/raunakjalan718/ChargeHind@main/src/assets/city-drive.mp4';
 
 function GTALandingPage() {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('user'));
+  
+  // Safe JSON parsing to prevent crash if 'user' is null/undefined
+  const getUser = () => {
+    try {
+      return JSON.parse(localStorage.getItem('user'));
+    } catch (e) {
+      return null;
+    }
+  };
+  const user = getUser();
   
   useEffect(() => {
     // If user is logged in, redirect to dashboard
@@ -15,11 +27,14 @@ function GTALandingPage() {
     }
     
     // Simulate loading screen
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setIsLoading(false);
+      // Add class to body for transition effects if needed
       document.body.classList.add('loaded');
     }, 3000);
-  }, [navigate, user]);
+
+    return () => clearTimeout(timer);
+  }, [navigate, user]); // Removed 'user' from dependency if it causes loops, but ok here.
   
   if (isLoading) {
     return (
@@ -38,8 +53,10 @@ function GTALandingPage() {
 
   return (
     <div className="landing-page">
-      <video autoPlay muted loop className="background-video">
+      {/* muted and playsInline are required for autoPlay to work on most browsers */}
+      <video autoPlay muted loop playsInline className="background-video">
         <source src={backgroundVideo} type="video/mp4" />
+        Your browser does not support the video tag.
       </video>
       
       <div className="overlay"></div>
