@@ -1,16 +1,4 @@
-Here is the fixed version of your `src/pages/StationsPage.js`.
-
-I have fixed the three specific errors blocking your Vercel deployment:
-
-1. **Removed `useRef**` from imports (it was unused).
-2. **Removed `Connections**` from line 207 (it was destructured but never used).
-3. **Added `// eslint-disable...**` to the `useEffect` hook so Vercel stops complaining about the missing dependency.
-
-You can copy and paste this entire code block to replace your current file:
-
-```javascript
-// src/pages/StationsPage.js
-import React, { useState, useEffect } from 'react'; // FIXED: Removed unused 'useRef'
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
@@ -201,15 +189,9 @@ function StationsPage() {
         try {
           const stationsData = await getChargingStations(latitude, longitude);
           
-          // Debugging output
-          console.log("First 3 stations data:", stationsData.slice(0, 3));
-          console.log("Sample address info:", stationsData[0]?.AddressInfo);
-          console.log("Sample connection info:", stationsData[0]?.Connections);
-          
           if (stationsData && stationsData.length > 0) {
             // Process station data
             const processedStations = stationsData.map(station => {
-              // FIXED: Removed unused 'Connections' variable
               const { AddressInfo } = station;
               
               // Calculate distance from user
@@ -261,32 +243,25 @@ function StationsPage() {
   useEffect(() => {
     requestUserLocation();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // FIXED: Added eslint disable to ignore dependency warning
+  }, []); 
 
   // Helper function to get connector types
   const getConnectorTypes = (station) => {
     if (!station.Connections || !station.Connections.length) return 'CCS';
-    
-    // Get unique connector types
     const types = [...new Set(station.Connections.map(c => 
       c.ConnectionType ? c.ConnectionType.Title : 'CCS'
     ))];
-    
     return types.join(', ');
   };
   
   // Helper function to get maximum power
   const getMaxPower = (station) => {
     if (!station.Connections || !station.Connections.length) return '80 kW';
-    
     const powers = station.Connections
       .filter(c => c.PowerKW)
       .map(c => c.PowerKW);
-    
     if (!powers.length) return '80 kW';
-    
-    const maxPower = Math.max(...powers);
-    return `${maxPower} kW`;
+    return `${Math.max(...powers)} kW`;
   };
   
   // Helper function to get number of connectors
@@ -336,7 +311,6 @@ function StationsPage() {
               
               <MapController selectedStation={selectedStation} />
               
-              {/* User location marker */}
               <Marker 
                 position={[userLocation.lat, userLocation.lng]}
                 icon={userLocationIcon}
@@ -344,14 +318,11 @@ function StationsPage() {
                 <Popup>Your current location</Popup>
               </Marker>
               
-              {/* Station markers */}
               {stations.map(station => {
                 if (!station.AddressInfo || !station.AddressInfo.Latitude || !station.AddressInfo.Longitude) {
                   return null;
                 }
-                
                 const { Latitude, Longitude } = station.AddressInfo;
-                
                 return (
                   <Marker
                     key={station.ID}
@@ -386,11 +357,8 @@ function StationsPage() {
           </div>
           <div className="stations-list">
             {nearbyStations.map((station, index) => {
-              // Extract data safely with fallbacks
               const AddressInfo = station.AddressInfo || {};
               const OperatorInfo = station.OperatorInfo || {};
-              
-              // Get operator name with fallback
               const operatorName = OperatorInfo.Title || 'Unknown Operator';
               
               return (
@@ -404,17 +372,13 @@ function StationsPage() {
                     <img src={getStationImage(operatorName)} alt={operatorName + " station"} />
                     <div className="station-distance">{station.distance}</div>
                   </div>
-                  
                   <div className="station-details">
                     <h3 className="station-name">{AddressInfo.Title || `Charging Station ${index+1}`}</h3>
                     <p className="station-description">Electric vehicle charging station</p>
-                    {/* Address line removed as requested */}
-                    
                     <div className="station-info">
                       <div className={`station-hours ${getStationHours(station).includes('24') ? 'open-24' : 'open'}`}>
                         {getStationHours(station)}
                       </div>
-                      
                       <div className="connector-info">
                         <span className="connector-type">
                           {getConnectorTypes(station)}
@@ -439,5 +403,3 @@ function StationsPage() {
 }
 
 export default StationsPage;
-
-```
