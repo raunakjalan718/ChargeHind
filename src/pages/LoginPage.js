@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './LoginPage.css';
-import backgroundVideo from '../assets/videos/city-drive.mp4';
+
+// --- FIX: Use const instead of import for external video URLs ---
+const backgroundVideo = 'https://cdn.jsdelivr.net/gh/raunakjalan718/ChargeHind@main/src/assets/city-drive.mp4';
 
 function LoginPage() {
   const [activeTab, setActiveTab] = useState('user');
@@ -29,7 +31,7 @@ function LoginPage() {
 
   return (
     <div className="login-page">
-      <video autoPlay muted loop className="background-video">
+      <video autoPlay muted loop playsInline className="background-video">
         <source src={backgroundVideo} type="video/mp4" />
       </video>
       
