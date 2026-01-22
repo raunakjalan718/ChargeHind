@@ -10,20 +10,20 @@ import './StationsPage.css';
 import { getChargingStations } from '../services/ChargingStationService';
 
 // Import station images
-import atherStationImg from '../assets/Stations/ather_station.jpg';
-import chargegridStationImg from '../assets/Stations/chargegrid_station.jpg';
-import chargezoneStationImg from '../assets/Stations/chargezone_station.jpg';
-import EESLStationImg from '../assets/Stations/EESL_station.jpg';
-import HyundaiStationImg from '../assets/Stations/Hyundai_station.jpg';
-import IndianOilStationImg from '../assets/Stations/IndianOil_Station.jpg';
-import JioStationImg from '../assets/Stations/Jio_station.jpg';
-import OlaStationImg from '../assets/Stations/Ola_Station.jpg';
-import PlugGoStationImg from '../assets/Stations/PlugGo_Station.jpg';
-import qikchargeStationImg from '../assets/Stations/qikcharge_station.jpg';
-import TataStationImg from '../assets/Stations/Tata_station.jpg';
-import otherStationImg from '../assets/Stations/other_station.jpg';
-import BharatPetroleumImg from '../assets/Stations/other_station.jpg';
-import MagentaPowerImg from '../assets/Stations/other_station.jpg';
+import atherStationImg from 'https://media.githubusercontent.com/media/raunakjalan718/ChargeHind/refs/heads/main/src/assets/Stations/ather_station.jpg';
+import chargegridStationImg from 'https://media.githubusercontent.com/media/raunakjalan718/ChargeHind/refs/heads/main/src/assets/Stations/chargegrid_station.jpg';
+import chargezoneStationImg from 'https://media.githubusercontent.com/media/raunakjalan718/ChargeHind/refs/heads/main/src/assets/Stations/chargezone_station.jpg';
+import EESLStationImg from 'https://media.githubusercontent.com/media/raunakjalan718/ChargeHind/refs/heads/main/src/assets/Stations/EESL_station.jpg';
+import HyundaiStationImg from 'https://media.githubusercontent.com/media/raunakjalan718/ChargeHind/refs/heads/main/src/assets/Stations/Hyundai_station.jpg';
+import IndianOilStationImg from 'https://media.githubusercontent.com/media/raunakjalan718/ChargeHind/refs/heads/main/src/assets/Stations/IndianOil_Station.jpg';
+import JioStationImg from 'https://media.githubusercontent.com/media/raunakjalan718/ChargeHind/refs/heads/main/src/assets/Stations/Jio_station.jpg';
+import OlaStationImg from 'https://media.githubusercontent.com/media/raunakjalan718/ChargeHind/refs/heads/main/src/assets/Stations/Ola_Station.jpg';
+import PlugGoStationImg from 'https://media.githubusercontent.com/media/raunakjalan718/ChargeHind/refs/heads/main/src/assets/Stations/PlugGo_Station.jpg';
+import qikchargeStationImg from 'https://media.githubusercontent.com/media/raunakjalan718/ChargeHind/refs/heads/main/src/assets/Stations/qikcharge_station.jpg';
+import TataStationImg from 'https://media.githubusercontent.com/media/raunakjalan718/ChargeHind/refs/heads/main/src/assets/Stations/Tata_station.jpg';
+import otherStationImg from 'https://media.githubusercontent.com/media/raunakjalan718/ChargeHind/refs/heads/main/src/assets/Stations/other_station.jpg';
+import BharatPetroleumImg from 'https://media.githubusercontent.com/media/raunakjalan718/ChargeHind/refs/heads/main/src/assets/Stations/other_station.jpg';
+import MagentaPowerImg from 'https://media.githubusercontent.com/media/raunakjalan718/ChargeHind/refs/heads/main/src/assets/Stations/other_station.jpg';
 
 // Fix Leaflet icon issue
 import icon from 'leaflet/dist/images/marker-icon.png';
