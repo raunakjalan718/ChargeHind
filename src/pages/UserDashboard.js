@@ -1,6 +1,9 @@
 import React from 'react';
 import './UserDashboard.css';
-import backgroundVideo from '../assets/videos/city-drive.mp4';
+
+// --- FIX: Use const instead of import for external video URLs ---
+// I also updated this to use a CDN link which loads faster than raw GitHub
+const backgroundVideo = 'https://cdn.jsdelivr.net/gh/raunakjalan718/ChargeHind@main/src/assets/city-drive.mp4';
 
 // If you plan to use these later, uncomment them and add them to the JSX below.
 // import { Link, useNavigate } from 'react-router-dom';
@@ -11,8 +14,9 @@ import backgroundVideo from '../assets/videos/city-drive.mp4';
 function UserDashboard() {
   return (
     <div className="dashboard-page">
-      <video autoPlay muted loop className="background-video">
+      <video autoPlay muted loop playsInline className="background-video">
         <source src={backgroundVideo} type="video/mp4" />
+        Your browser does not support the video tag.
       </video>
       
       {/* Add your dashboard buttons here when ready.
