@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './GTALandingPage.css';
-import backgroundVideo from '../assets/videos/city-drive.mp4';
+import backgroundVideo from 'https://github.com/raunakjalan718/ChargeHind/raw/refs/heads/main/src/assets/city-drive.mp4';
 
 function GTALandingPage() {
   const [isLoading, setIsLoading] = useState(true);
