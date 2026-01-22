@@ -1,8 +1,12 @@
-import React from 'react'; // Removed unused { useEffect }
-// Removed unused imports from 'react-router-dom'
+import React from 'react';
 import './UserDashboard.css';
-// Removed unused icon imports (mapIcon, routeIcon, slotIcon)
 import backgroundVideo from '../assets/videos/city-drive.mp4';
+
+// If you plan to use these later, uncomment them and add them to the JSX below.
+// import { Link, useNavigate } from 'react-router-dom';
+// import mapIcon from '../assets/icons/map-icon.png';
+// import routeIcon from '../assets/icons/route-icon.png';
+// import slotIcon from '../assets/icons/slot-icon.png';
 
 function UserDashboard() {
   return (
@@ -11,10 +15,12 @@ function UserDashboard() {
         <source src={backgroundVideo} type="video/mp4" />
       </video>
       
-      {/* If you have other content in your dashboard, 
-          make sure it goes here. 
+      {/* Add your dashboard buttons here when ready.
+          Currently keeping this empty to pass the "Unused Variables" check.
       */}
-      
+      <div className="dashboard-content">
+        <h1>Welcome to User Dashboard</h1>
+      </div>
     </div>
   );
 }
