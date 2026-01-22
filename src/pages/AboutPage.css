@@ -132,15 +132,15 @@
 }
 
 #find-stations .feature-image {
-  background-image: url('../assets/images/find-stations.jpg');
+  background-image: url('https://media.githubusercontent.com/media/raunakjalan718/ChargeHind/refs/heads/main/src/assets/images/find-stations.jpg');
 }
 
 #check-status .feature-image {
-  background-image: url('../assets/images/check-status.jpg');
+  background-image: url('https://media.githubusercontent.com/media/raunakjalan718/ChargeHind/refs/heads/main/src/assets/images/check-status.jpg');
 }
 
 #reserve .feature-image {
-  background-image: url('../assets/images/reserve.jpg');
+  background-image: url('http://media.githubusercontent.com/media/raunakjalan718/ChargeHind/refs/heads/main/src/assets/images/reserve.jpg');
 }
 
 .feature-info {
